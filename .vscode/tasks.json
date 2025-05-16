@@ -1,0 +1,65 @@
+{
+  "version": "2.0.0",
+
+  "tasks": [
+    {
+      "type": "cppbuild",
+      "label": "C/C++: g++.exe build active file",
+      "command": "C:\\msys64\\mingw64\\bin\\g++.exe",
+
+      "args": [
+        "-fdiagnostics-color=always",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Wpedantic",
+        "-std=c++17",
+        "-O0",
+        "-D_DEBUG",
+        "${file}",
+        "-o",
+        "${fileDirname}\\${fileBasenameNoExtension}.exe"
+      ],
+
+      "options": {
+        "cwd": "${fileDirname}"
+      },
+
+      "problemMatcher": [
+        "$gcc",
+        {
+          "owner": "cpp",
+          "fileLocation": ["relative", "${workspaceFolder}"],
+          "pattern": {
+            "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+            "file": 1,
+            "line": 2,
+            "column": 3,
+            "severity": 4,
+            "message": 5
+          }
+        }
+      ],
+
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+
+      "detail": "C/C++: g++.exe build active file",
+
+      "windows": {
+        "options": {
+          "env": {
+            "PATH": "${env:PATH};C:\\msys64\\mingw64\\bin"
+          }
+        }
+      }
+    }
+  ]
+}
