@@ -35,19 +35,24 @@ def display_computed_df(df: pd.DataFrame, computed_col: str):
     print(f"[+] Lowest GRDP per capita: {df[computed_col].min():,.2f} BVnd")
 
 
-def rank_df(computed_df: pd.DataFrame, computed_col: str, num_rank=4):
+def rank_df(computed_df: pd.DataFrame, computed_col: str, num_rank=enter.NUM_RANK):
     score_df = computed_df.sort_values(computed_col, ascending=True)
 
-    bin_len = len(score_df) // num_rank
-    if len(score_df) % num_rank != 0:
-        bin_len += 1
+    scores = []
+    for score in range(1, num_rank+1):
+        tmp_list = [score] * (len(score_df) // num_rank)
+        R = len(score_df) % num_rank
+        if score <= R:  # [1, 2, 3]
+            tmp_list += [score]
+        scores.extend(tmp_list)
+        print(f"---> Len of scores(num_rank={num_rank}):", len(scores))
 
     score_col = "score"
-    score_df[score_col] = [i // bin_len + 1 for i in range(len(score_df))]
+    score_df[score_col] = scores
     return score_df, score_col
 
 
-def rank_df_follow_minmax(computed_df: pd.DataFrame, computed_col: str, num_rank=4):
+def rank_df_follow_minmax(computed_df: pd.DataFrame, computed_col: str, num_rank=enter.NUM_RANK):
     score_df = computed_df.sort_values(computed_col, ascending=True)
 
     min_v, max_v = min(score_df[computed_col]), max(score_df[computed_col])
@@ -67,9 +72,10 @@ if __name__ == "__main__":
     display_computed_df(df=df, computed_col=computed_col)
 
     score_df, score_col = rank_df(
-        computed_df=df, computed_col=computed_col)
+        computed_df=df, computed_col=computed_col, num_rank=enter.NUM_RANK)
     if enter.USE_MINMAX_SCORE:
-        tmp = rank_df_follow_minmax(computed_df=df, computed_col=computed_col)
+        tmp = rank_df_follow_minmax(
+            computed_df=df, computed_col=computed_col, num_rank=enter.NUM_RANK)
         score_df[tmp[1]] = tmp[0][tmp[1]].copy()
 
     # Save the scored DataFrame to CSV

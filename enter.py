@@ -5,6 +5,9 @@ region_path = 'output/scored_regions.csv'
 
 USE_MINMAX_SCORE = True
 
+NUM_RANK = 5
+
+
 regions_data = {
     "Northern Highlands": [
         "Phu Tho", "Thai Nguyen", "Bac Giang", "Son La", "Lao Cai", "Hoa Binh",
